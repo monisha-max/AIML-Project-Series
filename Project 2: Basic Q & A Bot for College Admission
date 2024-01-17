@@ -1,0 +1,47 @@
+class AdmissionChatbot:
+    def __init__(self):
+        self.context = {}
+
+    def welcome(self):
+        return "Welcome to the College Admission Chatbot! How can I assist you today?"
+
+    def handle_query(self, user_input):
+        # Check if the user is providing their name
+        if "my name is" in user_input:
+            user_name = user_input.split("my name is")[-1].strip()
+            self.context['user_name'] = user_name
+            response = f"Hello, {user_name}! How can I assist you with the admission process?"
+        else:
+            # Basic Q&A logic
+            if "admission procedures" in user_input:
+                response = "The admission procedures include submitting an application, providing transcripts, and attending an interview."
+            elif "requirements" in user_input:
+                response = "The admission requirements may vary, but typically include academic records, recommendation letters, and a personal statement."
+            elif "deadlines" in user_input:
+                response = "The admission deadlines depend on the program. It's crucial to submit your application before the specified deadline."
+            else:
+                response = "I'm sorry, I couldn't understand that. Please ask about admission procedures, requirements, or deadlines."
+
+        # Update context based on user input
+        self.update_context(user_input)
+
+        return response
+
+    def update_context(self, user_input):
+        # Logic to update context based on user input
+        # You can implement more advanced context management as needed
+        pass
+
+# Example usage
+chatbot = AdmissionChatbot()
+
+print(chatbot.welcome())
+
+while True:
+    user_input = input("You: ")
+    if user_input.lower() == 'exit':
+        print("Goodbye!")
+        break
+
+    response = chatbot.handle_query(user_input)
+    print("Bot:", response)
