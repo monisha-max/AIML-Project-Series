@@ -6,7 +6,7 @@ class AdmissionChatbot:
         return "Welcome to the College Admission Chatbot! How can I assist you today?"
 
     def handle_query(self, user_input):
-        # Check if the user is providing their name
+        # Checking if the user is providing their name
         if "my name is" in user_input:
             user_name = user_input.split("my name is")[-1].strip()
             self.context['user_name'] = user_name
@@ -22,17 +22,15 @@ class AdmissionChatbot:
             else:
                 response = "I'm sorry, I couldn't understand that. Please ask about admission procedures, requirements, or deadlines."
 
-        # Update context based on user input
+     
         self.update_context(user_input)
 
         return response
 
     def update_context(self, user_input):
-        # Logic to update context based on user input
-        # You can implement more advanced context management as needed
         pass
 
-# Example usage
+
 chatbot = AdmissionChatbot()
 
 print(chatbot.welcome())
