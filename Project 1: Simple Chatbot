@@ -22,20 +22,20 @@ class Chatbot:
         return response
 
     def process_user_input(self, user_input):
-        # Check if the user is saying goodbye
+        # Checking if the user is saying goodbye
         if any(word in user_input.lower() for word in ["bye", "goodbye"]):
             return self.farewell()
 
-        # Check if the user is asking a basic question
+        # Checking if the user is asking a basic question
         response = self.handle_basic_questions(user_input)
         if response != "I'm not sure how to answer that.":
             return response
 
-        # Handle the "yes" case for telling a joke
+        # Handling the "yes" case for telling a joke
         if "Can you tell a joke" in user_input:
             return self.handle_basic_questions("Can you tell a joke")
 
-        # Handle previous context
+        # Handling previous context
         if "last_question" in self.context:
             last_question = self.context["last_question"]
             return f"Continuing from our previous conversation, you asked: {last_question}"
