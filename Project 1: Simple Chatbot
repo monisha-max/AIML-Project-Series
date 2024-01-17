@@ -1,0 +1,65 @@
+class Chatbot:
+    def __init__(self):
+        self.context = {}
+
+    def greet(self):
+        return "Hello! How can I help you today?"
+
+    def farewell(self):
+        return "Goodbye! If you have more questions, feel free to ask."
+
+    def handle_basic_questions(self, question):
+        basic_responses = {
+            "How are you?": "I'm doing well, thank you!",
+            "What is your name?": "I'm a chatbot, you can call me ChatGPT.",
+            "What do you do?": "I'm here to assist and answer your questions.",
+            "Where are you from?": "I exist in the digital realm, but I'm here to help you!",
+            "Can you tell a joke?": "Sure, why did the computer go to therapy? It had too many bytes of emotional baggage!"
+        }
+
+        response = basic_responses.get(question, "I'm not sure how to answer that.")
+        self.context["last_question"] = question  # Store the current question in the context
+        return response
+
+    def process_user_input(self, user_input):
+        # Check if the user is saying goodbye
+        if any(word in user_input.lower() for word in ["bye", "goodbye"]):
+            return self.farewell()
+
+        # Check if the user is asking a basic question
+        response = self.handle_basic_questions(user_input)
+        if response != "I'm not sure how to answer that.":
+            return response
+
+        # Handle the "yes" case for telling a joke
+        if "Can you tell a joke" in user_input:
+            return self.handle_basic_questions("Can you tell a joke")
+
+        # Handle previous context
+        if "last_question" in self.context:
+            last_question = self.context["last_question"]
+            return f"Continuing from our previous conversation, you asked: {last_question}"
+
+        # User interaction flow
+        if not user_input.strip():
+            return "I'm sorry, I didn't understand that. Can you please ask again?"
+
+        if "questions_asked" not in self.context:
+            self.context["questions_asked"] = 0
+
+        if self.context["questions_asked"] < 3:
+            user_response = input("Ask me a question: ")
+            self.context["last_question"] = user_response
+            self.context["questions_asked"] += 1
+            return f"Interesting question! What else would you like to know?"
+
+        return "Feel free to ask anything else or say goodbye if you're done."
+
+# Main loop
+chatbot = Chatbot()
+print(chatbot.greet())
+
+while True:
+    user_input = input("You: ")
+    response = chatbot.process_user_input(user_input)
+    print("Chatbot:", response)
